@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:whatapp_clone/screens/camera_screen.dart';
+import 'package:whatapp_clone/screens/chat_screen.dart';
+import 'package:whatapp_clone/screens/status_screen.dart';
+import 'package:whatapp_clone/widgets/custom_appbar.dart';
+
+import 'call_sreen.dart';
 
 class WhatAppHome extends StatefulWidget {
   WhatAppHome({Key? key}) : super(key: key);
@@ -21,39 +27,23 @@ class _WhatAppHomeState extends State<WhatAppHome>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // backgroundColor: Color(0xff2a948a),
-        title: Text("WhatsApp"),
-        elevation: 0.7,
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Icon(Icons.search),
-              SizedBox(width: 15),
-              Icon(Icons.more_vert),
-            ],
-          )
-          // Icon(Icons.search),
-          // SizedBox(
-          //   width: 20,
-          // ),
-          // Icon(
-          //   Icons.more_vert,
-          // )
+      appBar: CustomAppBar(tabController: _tabController),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          CameraScreen(),
+          ChatScreen(),
+          StatusScreen(),
+          CallScreen(),
         ],
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: Colors.white,
-          tabs: [
-            const Tab(icon: Icon(Icons.camera_alt)),
-            Tab(text: "CHATS"),
-            Tab(text: "STATUS"),
-            Tab(text: "CALLS"),
-          ],
-        ),
       ),
-      body: Container(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).appBarTheme.color,
+        child: Icon(Icons.message),
+        onPressed: () {
+          print("open chat");
+        },
+      ),
     );
   }
 }
